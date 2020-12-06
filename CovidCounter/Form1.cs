@@ -10,7 +10,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace CovidCounter
 {
@@ -84,26 +83,37 @@ namespace CovidCounter
 
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-                StringBuilder sb = new StringBuilder();
-                string delimiter = ",";
+                using (StreamWriter sw = new StreamWriter(sfd.FileName))
+                {
+                    var result = (from x in Records
+                                  where x.Countries.Contains(tBCountry.Text) && x.CountryCode.Contains(tBCountryCode.Text)
+                                  select x).ToList();
 
-                XDocument.Load(@"D:\Suli\Tananyag\V. félév\IRF\Gyak\Beadando\CovidCounter\Covid Cases.xml").Descendants("record").ToList().ForEach(
-                    element => sb.Append(element.Element("dateRep").Value + delimiter +
-                                         element.Element("cases").Value + delimiter +
-                                         element.Element("deaths").Value + delimiter +
-                                         element.Element("countriesAndTerritories").Value + delimiter +
-                                         element.Element("countryterritoryCode").Value + delimiter +
-                                         element.Element("continentExp").Value + "\r\n"));
-
-                StreamWriter sw = new StreamWriter(sfd.FileName);
-                sw.WriteLine(sb.ToString());
-                sw.Close();
+                    foreach (var r in result)
+                    {
+                        string line = r.Date + ";" + r.Cases.ToString() + ";" + r.Deaths.ToString() + ";" + r.Countries + ";" + r.CountryCode + ";" + r.Continent;
+                        sw.WriteLine(line);
+                    }
+                }
             }
+        }
+
+        void Search()
+        {
+            var result = (from x in Records
+                          where x.Countries.Contains(tBCountry.Text) && x.CountryCode.Contains(tBCountryCode.Text)
+                          select x).ToList();
+            dataGridView1.DataSource = result;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveCSV();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            Search();
         }
     }
 }
