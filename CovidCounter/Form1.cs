@@ -15,7 +15,9 @@ namespace CovidCounter
 {
     public partial class Form1 : Form
     {
+        Random rnd = new Random();
         BindingList<Record> Records = new BindingList<Record>();
+        
         public Form1()
         {
             InitializeComponent();
@@ -106,6 +108,40 @@ namespace CovidCounter
             dataGridView1.DataSource = result;
         }
 
+        void RandomCountry()
+        {
+            //214
+            int rndNumber = rnd.Next(213);
+            string[] countries = new string[214] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua_and_Barbuda", "Argentina", "Armenia", "Aruba",
+                                                 "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize",
+                                                 "Benin", "Bermuda", "Bhutan", "Bolivia", "Bonaire, Saint Eustatius and Saba", "Bosnia_and_Herzegovina", "Botswana", "Brazil", "British_Virgin_Islands", "Brunei_Darussalam",
+                                                 "Bulgaria", "Burkina_Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape_Verde", "Cases_on_an_international_conveyance_Japan", "Cayman_Islands", "Central_African_Republic",
+                                                 "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa_Rica", "Cote_dIvoire", "Croatia", "Cuba",
+                                                 "CuraĂ§ao", "Cyprus", "Czechia", "Democratic_Republic_of_the_Congo", "Denmark", "Djibouti", "Dominica", "Dominican_Republic", "Ecuador", "Egypt",
+                                                 "El_Salvador", "Equatorial_Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Falkland_Islands_(Malvinas)", "Faroe_Islands", "Fiji", "Finland",
+                                                 "France", "French_Polynesia", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland",
+                                                 "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea_Bissau", "Guyana", "Haiti", "Holy_See", "Honduras",
+                                                 "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle_of_Man", "Israel", "Italy",
+                                                 "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos",
+                                                 "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi",
+                                                 "Malaysia", "Maldives", "Mali", "Malta", "Marshall_Islands", "Mauritania", "Mauritius", "Mexico", "Moldova", "Monaco",
+                                                 "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nepal", "Netherlands", "New_Caledonia",
+                                                 "New_Zealand", "Nicaragua", "Niger", "Nigeria", "North_Macedonia", "Northern_Mariana_Islands", "Norway", "Oman", "Pakistan", "Palestine",
+                                                 "Panama", "Papua_New_Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto_Rico", "Qatar", "Romania",
+                                                 "Russia", "Rwanda", "Saint_Kitts_and_Nevis", "Saint_Lucia", "Saint_Vincent_and_the_Grenadines", "San_Marino", "Sao_Tome_and_Principe", "Saudi_Arabia", "Senegal", "Serbia",
+                                                 "Seychelles", "Sierra_Leone", "Singapore", "Sint_Maarten", "Slovakia", "Slovenia", "Solomon_Islands", "Somalia", "South_Africa", "South_Korea",
+                                                 "South_Sudan", "Spain", "Sri_Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan",
+                                                 "Thailand", "Timor_Leste", "Togo", "Trinidad_and_Tobago", "Tunisia", "Turkey", "Turks_and_Caicos_islands", "Uganda", "Ukraine", "United_Arab_Emirates",
+                                                 "United_Kingdom", "United_Republic_of_Tanzania", "United_States_of_America", "United_States_Virgin_Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Wallis_and_Futuna",
+                                                 "Western_Sahara", "Yemen", "Zambia", "Zimbabwe"};
+            string rndCountry = countries[rndNumber];
+
+            var result = (from x in Records
+                          where x.Countries.Contains(rndCountry)
+                          select x).ToList();
+            dataGridView1.DataSource = result;
+        }
+
         private void btnSave_Click(object sender, EventArgs e)
         {
             SaveCSV();
@@ -114,6 +150,11 @@ namespace CovidCounter
         private void btnSearch_Click(object sender, EventArgs e)
         {
             Search();
+        }
+
+        private void btnRandom_Click(object sender, EventArgs e)
+        {
+            RandomCountry();
         }
     }
 }
