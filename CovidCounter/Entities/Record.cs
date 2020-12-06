@@ -18,7 +18,7 @@ namespace CovidCounter.Entities
         public string GeoID { get; set; }
         public string CountryCode { get; set; }
         public string Continent { get; set; }
-        public double Cumulative_number { get; set; }
+        public string CumulativeNumber { get; set; }
         //Kummulált érték 2 heti esetszám alpján 100 000 főre nézve 
     }
 }

@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace CovidCounter
 {
@@ -33,40 +35,75 @@ namespace CovidCounter
                 Records.Add(rec);
 
                 var date = (XmlElement)element.ChildNodes[0];
-                if (date.Name == "dateRep") { rec.Date = date.InnerText; }
+                rec.Date = date.InnerText;
 
                 var day = (XmlElement)element.ChildNodes[1];
-                if (day.Name == "day") { rec.Day = int.Parse(day.InnerText); }
+                rec.Day = int.Parse(day.InnerText);
 
                 var month = (XmlElement)element.ChildNodes[2];
-                if (month.Name == "month") { rec.Month = int.Parse(month.InnerText); }
+                rec.Month = int.Parse(month.InnerText);
 
                 var year = (XmlElement)element.ChildNodes[3];
-                if (year.Name == "year") { rec.Year = int.Parse(year.InnerText); }
+                rec.Year = int.Parse(year.InnerText);
 
                 var cases = (XmlElement)element.ChildNodes[4];
-                if (cases.Name == "cases") { rec.Cases = int.Parse(cases.InnerText); }
+                rec.Cases = int.Parse(cases.InnerText);
 
                 var deaths = (XmlElement)element.ChildNodes[5];
-                if (deaths.Name == "deaths") { rec.Deaths = int.Parse(deaths.InnerText); }
+                rec.Deaths = int.Parse(deaths.InnerText);
 
                 var countriesAndTerritories = (XmlElement)element.ChildNodes[6];
-                if (countriesAndTerritories.Name == "countriesAndTerritories") { rec.Countries = countriesAndTerritories.InnerText; }
+                rec.Countries = countriesAndTerritories.InnerText;
 
                 var geoId = (XmlElement)element.ChildNodes[7];
-                if (geoId.Name == "geoId") { rec.GeoID = geoId.InnerText; }
+                rec.GeoID = geoId.InnerText;
 
                 var countryterritoryCode = (XmlElement)element.ChildNodes[8];
-                if (countryterritoryCode.Name == "countryterritoryCode") { rec.CountryCode = countryterritoryCode.InnerText; }
+                rec.CountryCode = countryterritoryCode.InnerText;
 
-                var continentExp = (XmlElement)element.ChildNodes[9];
-                if (continentExp.Name == "continentExp") { rec.Continent = continentExp.InnerText; }
+                var continentExp = (XmlElement)element.ChildNodes[10];
+                rec.Continent = continentExp.InnerText;
 
-                var Cumulative = (XmlElement)element.ChildNodes[10];
-                if (Cumulative.Name == "Cumulative_number_for_14_days_of_COVID-19_cases_per_100000") { rec.Cumulative_number = double.Parse(Cumulative.InnerText); }
+                var Cumulative = (XmlElement)element.ChildNodes[11];
+                rec.CumulativeNumber = Cumulative.InnerText;
 
-                //if (element == null) { continue; }
+                //if (cases.InnerText == "0") { continue; }
             }
+        }
+
+        /*void Refresh()
+        {
+            Records.Clear();
+
+        }*/
+
+        void SaveCSV()
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            sfd.Filter = "CSV File |*.csv";
+
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                StringBuilder sb = new StringBuilder();
+                string delimiter = ",";
+
+                XDocument.Load(@"D:\Suli\Tananyag\V. félév\IRF\Gyak\Beadando\CovidCounter\Covid Cases.xml").Descendants("record").ToList().ForEach(
+                    element => sb.Append(element.Element("dateRep").Value + delimiter +
+                                         element.Element("cases").Value + delimiter +
+                                         element.Element("deaths").Value + delimiter +
+                                         element.Element("countriesAndTerritories").Value + delimiter +
+                                         element.Element("countryterritoryCode").Value + delimiter +
+                                         element.Element("continentExp").Value + "\r\n"));
+
+                StreamWriter sw = new StreamWriter(sfd.FileName);
+                sw.WriteLine(sb.ToString());
+                sw.Close();
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveCSV();
         }
     }
 }
