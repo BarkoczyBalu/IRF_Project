@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using System.Xml;
 
 namespace CovidCounter
@@ -23,6 +24,7 @@ namespace CovidCounter
             InitializeComponent();
             CreateXML();
             DGW();
+            CreateChart();
         }
 
         void CreateXML()
@@ -83,7 +85,27 @@ namespace CovidCounter
                                 Kummulált_érték = r.CumulativeNumber
                           }).ToList();
 
-            dataGridView1.DataSource = dgwIn;
+            dgwData.DataSource = dgwIn;
+        }
+
+        void CreateChart()
+        {
+            chartCases.DataSource = Records;
+
+            var series = chartCases.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Cases";
+            series.BorderWidth = 2;
+
+            var legend = chartCases.Legends[0];
+            legend.Enabled = false;
+
+            var chartArea = chartCases.ChartAreas[0];
+            chartArea.AxisX.IsReversed = true;
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
         }
 
         void SaveCSV()
@@ -97,8 +119,8 @@ namespace CovidCounter
                 {
                     var result = (from r in Records
                                   where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text) &&
-                                  DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePicker1.Value &&
-                                  DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePicker2.Value
+                                  DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePickerstart.Value &&
+                                  DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePickerend.Value
                                   select r).ToList();
 
                     string fejlec = "Datum;Kontinens;Orszag;Orszagkod;Esetszam;Halalozas_szam";
@@ -118,8 +140,8 @@ namespace CovidCounter
         {
                 var result = (from r in Records
                               where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text) &&
-                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePicker1.Value &&
-                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePicker2.Value
+                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePickerstart.Value &&
+                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePickerend.Value
                               select new
                               {
                                   Dátum = r.Date,
@@ -129,16 +151,33 @@ namespace CovidCounter
                                   Halálozás_szám = r.Deaths,
                                   Kummulált_érték = r.CumulativeNumber
                               }).ToList();
-                dataGridView1.DataSource = result;
+                dgwData.DataSource = result;
+                chartCases.DataSource = result;
+
+                var series = chartCases.Series[0];
+                series.ChartType = SeriesChartType.Line;
+                series.XValueMember = "Dátum";
+                series.YValueMembers = "Esetszám";
+                series.BorderWidth = 2;
+
+                var legend = chartCases.Legends[0];
+                legend.Enabled = false;
+
+                var chartArea = chartCases.ChartAreas[0];
+                chartArea.AxisX.IsReversed = true;
+                chartArea.AxisX.MajorGrid.Enabled = false;
+                chartArea.AxisY.MajorGrid.Enabled = false;
+                chartArea.AxisY.IsStartedFromZero = false;
         }
 
         void Reset()
         {
             tBCountry.Clear();
             tBCountryCode.Clear();
-            dateTimePicker1.Value = DateTime.Parse("2020-01-01 00:00:00");
-            dateTimePicker2.Value = DateTime.Today;
+            dateTimePickerstart.Value = DateTime.Parse("2020-01-01 00:00:00");
+            dateTimePickerend.Value = DateTime.Today;
             DGW();
+            CreateChart();
         }
 
         void RandomCountry()
@@ -183,7 +222,7 @@ namespace CovidCounter
                               Halálozás_szám = r.Deaths,
                               Kummulált_érték = r.CumulativeNumber
                           }).ToList(); ;
-            dataGridView1.DataSource = result;
+            dgwData.DataSource = result;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

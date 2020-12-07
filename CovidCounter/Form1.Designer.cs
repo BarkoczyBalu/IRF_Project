@@ -28,7 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            this.dgwData = new System.Windows.Forms.DataGridView();
             this.btnRandom = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.tBCountryCode = new System.Windows.Forms.TextBox();
@@ -36,26 +39,28 @@
             this.labelCountry = new System.Windows.Forms.Label();
             this.labelCountryCode = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerstart = new System.Windows.Forms.DateTimePicker();
+            this.dateTimePickerend = new System.Windows.Forms.DateTimePicker();
             this.labelFrom = new System.Windows.Forms.Label();
             this.labelTo = new System.Windows.Forms.Label();
             this.btnReset = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.chartCases = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartCases)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dgwData
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgwData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 116);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(794, 331);
-            this.dataGridView1.TabIndex = 0;
+            this.dgwData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgwData.Location = new System.Drawing.Point(3, 116);
+            this.dgwData.Name = "dgwData";
+            this.dgwData.RowHeadersWidth = 51;
+            this.dgwData.RowTemplate.Height = 24;
+            this.dgwData.Size = new System.Drawing.Size(395, 331);
+            this.dgwData.TabIndex = 0;
             // 
             // btnRandom
             // 
@@ -119,20 +124,20 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // dateTimePicker1
+            // dateTimePickerstart
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(298, 24);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker1.TabIndex = 8;
-            this.dateTimePicker1.Value = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
+            this.dateTimePickerstart.Location = new System.Drawing.Point(298, 24);
+            this.dateTimePickerstart.Name = "dateTimePickerstart";
+            this.dateTimePickerstart.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerstart.TabIndex = 8;
+            this.dateTimePickerstart.Value = new System.DateTime(2020, 1, 1, 0, 0, 0, 0);
             // 
-            // dateTimePicker2
+            // dateTimePickerend
             // 
-            this.dateTimePicker2.Location = new System.Drawing.Point(298, 58);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.Size = new System.Drawing.Size(200, 22);
-            this.dateTimePicker2.TabIndex = 9;
+            this.dateTimePickerend.Location = new System.Drawing.Point(298, 58);
+            this.dateTimePickerend.Name = "dateTimePickerend";
+            this.dateTimePickerend.Size = new System.Drawing.Size(200, 22);
+            this.dateTimePickerend.TabIndex = 9;
             // 
             // labelFrom
             // 
@@ -155,7 +160,7 @@
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.btnReset.Location = new System.Drawing.Point(15, 83);
+            this.btnReset.Location = new System.Drawing.Point(3, 83);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(58, 27);
             this.btnReset.TabIndex = 12;
@@ -163,16 +168,35 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
+            // chartCases
+            // 
+            this.chartCases.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            chartArea1.Name = "ChartArea1";
+            this.chartCases.ChartAreas.Add(chartArea1);
+            legend1.Name = "Legend1";
+            this.chartCases.Legends.Add(legend1);
+            this.chartCases.Location = new System.Drawing.Point(404, 116);
+            this.chartCases.Name = "chartCases";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this.chartCases.Series.Add(series1);
+            this.chartCases.Size = new System.Drawing.Size(394, 331);
+            this.chartCases.TabIndex = 13;
+            this.chartCases.Text = "chart1";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.chartCases);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.labelTo);
             this.Controls.Add(this.labelFrom);
-            this.Controls.Add(this.dateTimePicker2);
-            this.Controls.Add(this.dateTimePicker1);
+            this.Controls.Add(this.dateTimePickerend);
+            this.Controls.Add(this.dateTimePickerstart);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.labelCountryCode);
             this.Controls.Add(this.labelCountry);
@@ -180,10 +204,11 @@
             this.Controls.Add(this.tBCountryCode);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnRandom);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgwData);
             this.Name = "Form1";
             this.Text = "Form1";
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgwData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartCases)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -191,7 +216,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgwData;
         private System.Windows.Forms.Button btnRandom;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.TextBox tBCountryCode;
@@ -199,11 +224,12 @@
         private System.Windows.Forms.Label labelCountry;
         private System.Windows.Forms.Label labelCountryCode;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
+        private System.Windows.Forms.DateTimePicker dateTimePickerstart;
+        private System.Windows.Forms.DateTimePicker dateTimePickerend;
         private System.Windows.Forms.Label labelFrom;
         private System.Windows.Forms.Label labelTo;
         private System.Windows.Forms.Button btnReset;
+        private System.Windows.Forms.DataVisualization.Charting.Chart chartCases;
     }
 }
 
