@@ -96,7 +96,9 @@ namespace CovidCounter
                 using (StreamWriter sw = new StreamWriter(sfd.FileName))
                 {
                     var result = (from r in Records
-                                  where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text)
+                                  where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text) &&
+                                  DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePicker1.Value &&
+                                  DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePicker2.Value
                                   select r).ToList();
 
                     string fejlec = "Datum;Kontinens;Orszag;Orszagkod;Esetszam;Halalozas_szam";
@@ -114,10 +116,10 @@ namespace CovidCounter
 
         void Search()
         {
-            if (tBCountry.Text != null && tBCountryCode.Text != null)
-            {
                 var result = (from r in Records
-                              where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text)
+                              where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text) &&
+                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePicker1.Value &&
+                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePicker2.Value
                               select new
                               {
                                   Dátum = r.Date,
@@ -128,11 +130,15 @@ namespace CovidCounter
                                   Kummulált_érték = r.CumulativeNumber
                               }).ToList();
                 dataGridView1.DataSource = result;
-            }
-            else
-            {
-                DGW();
-            }
+        }
+
+        void Reset()
+        {
+            tBCountry.Clear();
+            tBCountryCode.Clear();
+            dateTimePicker1.Value = DateTime.Parse("2020-01-01 00:00:00");
+            dateTimePicker2.Value = DateTime.Today;
+            DGW();
         }
 
         void RandomCountry()
@@ -193,6 +199,11 @@ namespace CovidCounter
         private void btnRandom_Click(object sender, EventArgs e)
         {
             RandomCountry();
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            Reset();
         }
     }
 }
