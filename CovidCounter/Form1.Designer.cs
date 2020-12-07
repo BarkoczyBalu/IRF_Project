@@ -58,9 +58,9 @@
             // 
             // btnRandom
             // 
-            this.btnRandom.Location = new System.Drawing.Point(524, 58);
+            this.btnRandom.Location = new System.Drawing.Point(524, 61);
             this.btnRandom.Name = "btnRandom";
-            this.btnRandom.Size = new System.Drawing.Size(123, 33);
+            this.btnRandom.Size = new System.Drawing.Size(135, 33);
             this.btnRandom.TabIndex = 1;
             this.btnRandom.Text = "Random Country";
             this.btnRandom.UseVisualStyleBackColor = true;
@@ -70,7 +70,7 @@
             // 
             this.btnSearch.Location = new System.Drawing.Point(524, 19);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(123, 33);
+            this.btnSearch.Size = new System.Drawing.Size(135, 33);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -110,7 +110,7 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(653, 38);
+            this.btnSave.Location = new System.Drawing.Point(665, 43);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(123, 32);
             this.btnSave.TabIndex = 7;

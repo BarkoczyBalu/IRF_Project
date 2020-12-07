@@ -22,7 +22,7 @@ namespace CovidCounter
         {
             InitializeComponent();
             CreateXML();
-            dataGridView1.DataSource = Records;
+            DGW();
         }
 
         void CreateXML()
@@ -67,16 +67,24 @@ namespace CovidCounter
 
                 var Cumulative = (XmlElement)element.ChildNodes[11];
                 rec.CumulativeNumber = Cumulative.InnerText;
-
-                //if (cases.InnerText == "0") { continue; }
             }
         }
 
-        /*void Refresh()
+        public void DGW()
         {
-            Records.Clear();
+            var dgwIn = (from r in Records
+                          select new
+                          { 
+                                Dátum = r.Date,
+                                Ország = r.Countries,
+                                Országkód = r.CountryCode,
+                                Esetszám = r.Cases,
+                                Halálozás_szám = r.Deaths,
+                                Kummulált_érték = r.CumulativeNumber
+                          }).ToList();
 
-        }*/
+            dataGridView1.DataSource = dgwIn;
+        }
 
         void SaveCSV()
         {
@@ -87,13 +95,17 @@ namespace CovidCounter
             {
                 using (StreamWriter sw = new StreamWriter(sfd.FileName))
                 {
-                    var result = (from x in Records
-                                  where x.Countries.Contains(tBCountry.Text) && x.CountryCode.Contains(tBCountryCode.Text)
-                                  select x).ToList();
+                    var result = (from r in Records
+                                  where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text)
+                                  select r).ToList();
+
+                    string fejlec = "Datum;Kontinens;Orszag;Orszagkod;Esetszam;Halalozas_szam";
+                    sw.WriteLine(fejlec);
 
                     foreach (var r in result)
                     {
-                        string line = r.Date + ";" + r.Cases.ToString() + ";" + r.Deaths.ToString() + ";" + r.Countries + ";" + r.CountryCode + ";" + r.Continent;
+                        
+                        string line = r.Date + ";" + r.Continent + ";" + r.Countries + ";" + r.CountryCode + ";" + r.Cases.ToString() + ";" + r.Deaths.ToString();
                         sw.WriteLine(line);
                     }
                 }
@@ -102,22 +114,40 @@ namespace CovidCounter
 
         void Search()
         {
-            var result = (from x in Records
-                          where x.Countries.Contains(tBCountry.Text) && x.CountryCode.Contains(tBCountryCode.Text)
-                          select x).ToList();
-            dataGridView1.DataSource = result;
+            if (tBCountry.Text != null && tBCountryCode.Text != null)
+            {
+                var result = (from r in Records
+                              where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text)
+                              select new
+                              {
+                                  Dátum = r.Date,
+                                  Ország = r.Countries,
+                                  Országkód = r.CountryCode,
+                                  Esetszám = r.Cases,
+                                  Halálozás_szám = r.Deaths,
+                                  Kummulált_érték = r.CumulativeNumber
+                              }).ToList();
+                dataGridView1.DataSource = result;
+            }
+            else
+            {
+                DGW();
+            }
         }
 
         void RandomCountry()
         {
-            //214
+            tBCountry.Clear();
+            tBCountryCode.Clear();
+
+
             int rndNumber = rnd.Next(213);
             string[] countries = new string[214] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua_and_Barbuda", "Argentina", "Armenia", "Aruba",
                                                  "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize",
                                                  "Benin", "Bermuda", "Bhutan", "Bolivia", "Bonaire, Saint Eustatius and Saba", "Bosnia_and_Herzegovina", "Botswana", "Brazil", "British_Virgin_Islands", "Brunei_Darussalam",
                                                  "Bulgaria", "Burkina_Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape_Verde", "Cases_on_an_international_conveyance_Japan", "Cayman_Islands", "Central_African_Republic",
                                                  "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa_Rica", "Cote_dIvoire", "Croatia", "Cuba",
-                                                 "CuraĂ§ao", "Cyprus", "Czechia", "Democratic_Republic_of_the_Congo", "Denmark", "Djibouti", "Dominica", "Dominican_Republic", "Ecuador", "Egypt",
+                                                 "Curaçao", "Cyprus", "Czechia", "Democratic_Republic_of_the_Congo", "Denmark", "Djibouti", "Dominica", "Dominican_Republic", "Ecuador", "Egypt",
                                                  "El_Salvador", "Equatorial_Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Falkland_Islands_(Malvinas)", "Faroe_Islands", "Fiji", "Finland",
                                                  "France", "French_Polynesia", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland",
                                                  "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea_Bissau", "Guyana", "Haiti", "Holy_See", "Honduras",
@@ -136,9 +166,17 @@ namespace CovidCounter
                                                  "Western_Sahara", "Yemen", "Zambia", "Zimbabwe"};
             string rndCountry = countries[rndNumber];
 
-            var result = (from x in Records
-                          where x.Countries.Contains(rndCountry)
-                          select x).ToList();
+            var result = (from r in Records
+                          where r.Countries.Contains(rndCountry)
+                          select new
+                          {
+                              Dátum = r.Date,
+                              Ország = r.Countries,
+                              Országkód = r.CountryCode,
+                              Esetszám = r.Cases,
+                              Halálozás_szám = r.Deaths,
+                              Kummulált_érték = r.CumulativeNumber
+                          }).ToList(); ;
             dataGridView1.DataSource = result;
         }
 
