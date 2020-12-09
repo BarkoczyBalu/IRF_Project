@@ -160,7 +160,7 @@ namespace CovidCounter
             series.XValueMember = "Dátum";
             series.YValueMembers = "Esetszám";
             series.BorderWidth = 2;
-            series.Color = Color.RoyalBlue;
+            series.Color = Color.OrangeRed;
 
             var legend = chartCases.Legends[0];
             legend.Enabled = false;
@@ -235,7 +235,7 @@ namespace CovidCounter
             series.XValueMember = "Dátum";
             series.YValueMembers = "Esetszám";
             series.BorderWidth = 2;
-            series.Color = Color.RoyalBlue;
+            series.Color = Color.OrangeRed;
 
             var legend = chartCases.Legends[0];
             legend.Enabled = false;
