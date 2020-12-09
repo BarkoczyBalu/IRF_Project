@@ -97,6 +97,7 @@ namespace CovidCounter
             series.XValueMember = "Date";
             series.YValueMembers = "Cases";
             series.BorderWidth = 2;
+            series.Color = Color.Transparent;
 
             var legend = chartCases.Legends[0];
             legend.Enabled = false;
@@ -106,6 +107,7 @@ namespace CovidCounter
             chartArea.AxisX.MajorGrid.Enabled = false;
             chartArea.AxisY.MajorGrid.Enabled = false;
             chartArea.AxisY.IsStartedFromZero = false;
+            chartArea.AxisY.Minimum = 0;
         }
 
         void SaveCSV()
@@ -159,6 +161,7 @@ namespace CovidCounter
                 series.XValueMember = "Dátum";
                 series.YValueMembers = "Esetszám";
                 series.BorderWidth = 2;
+                series.Color = Color.RoyalBlue;
 
                 var legend = chartCases.Legends[0];
                 legend.Enabled = false;
@@ -166,8 +169,9 @@ namespace CovidCounter
                 var chartArea = chartCases.ChartAreas[0];
                 chartArea.AxisX.IsReversed = true;
                 chartArea.AxisX.MajorGrid.Enabled = false;
-                chartArea.AxisY.MajorGrid.Enabled = false;
+                chartArea.AxisY.MajorGrid.LineColor = Color.LightGray; 
                 chartArea.AxisY.IsStartedFromZero = false;
+                chartArea.AxisY.Minimum = 0;
         }
 
         void Reset()
@@ -212,7 +216,9 @@ namespace CovidCounter
             string rndCountry = countries[rndNumber];
 
             var result = (from r in Records
-                          where r.Countries.Contains(rndCountry)
+                          where r.Countries.Contains(rndCountry) &&
+                          DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePickerstart.Value &&
+                          DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePickerend.Value
                           select new
                           {
                               Dátum = r.Date,
@@ -223,6 +229,24 @@ namespace CovidCounter
                               Kummulált_érték = r.CumulativeNumber
                           }).ToList(); ;
             dgwData.DataSource = result;
+            chartCases.DataSource = result;
+
+            var series = chartCases.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Dátum";
+            series.YValueMembers = "Esetszám";
+            series.BorderWidth = 2;
+            series.Color = Color.RoyalBlue;
+
+            var legend = chartCases.Legends[0];
+            legend.Enabled = false;
+
+            var chartArea = chartCases.ChartAreas[0];
+            chartArea.AxisX.IsReversed = true;
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.LineColor = Color.LightGray;
+            chartArea.AxisY.IsStartedFromZero = false;
+            chartArea.AxisY.Minimum = 0;
         }
 
         private void btnSave_Click(object sender, EventArgs e)

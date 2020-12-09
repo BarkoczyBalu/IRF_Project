@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dgwData = new System.Windows.Forms.DataGridView();
             this.btnRandom = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -59,24 +59,24 @@
             this.dgwData.Name = "dgwData";
             this.dgwData.RowHeadersWidth = 51;
             this.dgwData.RowTemplate.Height = 24;
-            this.dgwData.Size = new System.Drawing.Size(395, 331);
+            this.dgwData.Size = new System.Drawing.Size(526, 336);
             this.dgwData.TabIndex = 0;
             // 
             // btnRandom
             // 
-            this.btnRandom.Location = new System.Drawing.Point(524, 61);
+            this.btnRandom.Location = new System.Drawing.Point(618, 61);
             this.btnRandom.Name = "btnRandom";
-            this.btnRandom.Size = new System.Drawing.Size(135, 33);
+            this.btnRandom.Size = new System.Drawing.Size(74, 37);
             this.btnRandom.TabIndex = 1;
-            this.btnRandom.Text = "Random Country";
+            this.btnRandom.Text = "Random";
             this.btnRandom.UseVisualStyleBackColor = true;
             this.btnRandom.Click += new System.EventHandler(this.btnRandom_Click);
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(524, 19);
+            this.btnSearch.Location = new System.Drawing.Point(543, 16);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(135, 33);
+            this.btnSearch.Size = new System.Drawing.Size(149, 39);
             this.btnSearch.TabIndex = 2;
             this.btnSearch.Text = "Search";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -116,9 +116,9 @@
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(665, 43);
+            this.btnSave.Location = new System.Drawing.Point(698, 36);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(123, 32);
+            this.btnSave.Size = new System.Drawing.Size(149, 39);
             this.btnSave.TabIndex = 7;
             this.btnSave.Text = "Save Results";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -160,9 +160,9 @@
             // btnReset
             // 
             this.btnReset.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F);
-            this.btnReset.Location = new System.Drawing.Point(3, 83);
+            this.btnReset.Location = new System.Drawing.Point(543, 61);
             this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(58, 27);
+            this.btnReset.Size = new System.Drawing.Size(69, 37);
             this.btnReset.TabIndex = 12;
             this.btnReset.Text = "Reset";
             this.btnReset.UseVisualStyleBackColor = true;
@@ -172,17 +172,17 @@
             // 
             this.chartCases.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            chartArea1.Name = "ChartArea1";
-            this.chartCases.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chartCases.Legends.Add(legend1);
-            this.chartCases.Location = new System.Drawing.Point(404, 116);
+            chartArea2.Name = "ChartArea1";
+            this.chartCases.ChartAreas.Add(chartArea2);
+            legend2.Name = "Legend1";
+            this.chartCases.Legends.Add(legend2);
+            this.chartCases.Location = new System.Drawing.Point(535, 116);
             this.chartCases.Name = "chartCases";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.chartCases.Series.Add(series1);
-            this.chartCases.Size = new System.Drawing.Size(394, 331);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this.chartCases.Series.Add(series2);
+            this.chartCases.Size = new System.Drawing.Size(515, 336);
             this.chartCases.TabIndex = 13;
             this.chartCases.Text = "chart1";
             // 
@@ -190,7 +190,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1051, 457);
             this.Controls.Add(this.chartCases);
             this.Controls.Add(this.btnReset);
             this.Controls.Add(this.labelTo);
