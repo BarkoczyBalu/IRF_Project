@@ -24,4 +24,7 @@ Datagridview: Megjeleníti az összes adatsort, majd szűrés után a látni kí
 Chart: Megjeleníti az Esetszámok változását az idő elteltével.(X tengely=Dátum, Y tengely=Esetszám)
 
 -------------
+XML Forrás: https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide
+-------------
 Készítette: Barkóczy Balázs (GUH8IJ)
+-------------
