@@ -8,11 +8,22 @@ namespace CovidCounter.Entities
 {
     class Record
     {
+        private int _cases;
+
         public string Date { get; set; }
         public int Day { get; set; }
         public int Month { get; set; }
         public int Year { get; set; }
-        public int Cases { get; set; }
+        public int Cases
+        {
+            get { return _cases; }
+            set
+            {
+                if (value >= 150000) { _cases = 150000; }
+                else if (value < 11) { _cases = 0; }
+                else { _cases = value; }
+            } 
+        }
         public int Deaths { get; set; }
         public string Countries { get; set; }
         public string GeoID { get; set; }

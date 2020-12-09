@@ -106,8 +106,6 @@ namespace CovidCounter
             chartArea.AxisX.IsReversed = true;
             chartArea.AxisX.MajorGrid.Enabled = false;
             chartArea.AxisY.MajorGrid.Enabled = false;
-            chartArea.AxisY.IsStartedFromZero = false;
-            chartArea.AxisY.Minimum = 0;
         }
 
         void SaveCSV()
@@ -140,38 +138,39 @@ namespace CovidCounter
 
         void Search()
         {
-                var result = (from r in Records
-                              where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text) &&
-                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePickerstart.Value &&
-                              DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePickerend.Value
-                              select new
-                              {
-                                  Dátum = r.Date,
-                                  Ország = r.Countries,
-                                  Országkód = r.CountryCode,
-                                  Esetszám = r.Cases,
-                                  Halálozás_szám = r.Deaths,
-                                  Kummulált_érték = r.CumulativeNumber
-                              }).ToList();
-                dgwData.DataSource = result;
-                chartCases.DataSource = result;
+            var result = (from r in Records
+                          where r.Countries.Contains(tBCountry.Text) && r.CountryCode.Contains(tBCountryCode.Text) &&
+                          DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) >= dateTimePickerstart.Value &&
+                          DateTime.Parse(r.Year + "-" + r.Month + "-" + r.Day) <= dateTimePickerend.Value
+                          select new
+                          {
+                              Dátum = r.Date,
+                              Ország = r.Countries,
+                              Országkód = r.CountryCode,
+                              Esetszám = r.Cases,
+                              Halálozás_szám = r.Deaths,
+                              Kummulált_érték = r.CumulativeNumber
+                           }).ToList();
 
-                var series = chartCases.Series[0];
-                series.ChartType = SeriesChartType.Line;
-                series.XValueMember = "Dátum";
-                series.YValueMembers = "Esetszám";
-                series.BorderWidth = 2;
-                series.Color = Color.RoyalBlue;
+            dgwData.DataSource = result;
+            chartCases.DataSource = result;
 
-                var legend = chartCases.Legends[0];
-                legend.Enabled = false;
+            var series = chartCases.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Dátum";
+            series.YValueMembers = "Esetszám";
+            series.BorderWidth = 2;
+            series.Color = Color.RoyalBlue;
 
-                var chartArea = chartCases.ChartAreas[0];
-                chartArea.AxisX.IsReversed = true;
-                chartArea.AxisX.MajorGrid.Enabled = false;
-                chartArea.AxisY.MajorGrid.LineColor = Color.LightGray; 
-                chartArea.AxisY.IsStartedFromZero = false;
-                chartArea.AxisY.Minimum = 0;
+            var legend = chartCases.Legends[0];
+            legend.Enabled = false;
+
+            var chartArea = chartCases.ChartAreas[0];
+            chartArea.AxisX.IsReversed = true;
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = true;
+            chartArea.AxisY.MajorGrid.LineColor = Color.LightGray; 
+                
         }
 
         void Reset()
@@ -188,7 +187,6 @@ namespace CovidCounter
         {
             tBCountry.Clear();
             tBCountryCode.Clear();
-
 
             int rndNumber = rnd.Next(213);
             string[] countries = new string[214] { "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua_and_Barbuda", "Argentina", "Armenia", "Aruba",
@@ -214,6 +212,7 @@ namespace CovidCounter
                                                  "United_Kingdom", "United_Republic_of_Tanzania", "United_States_of_America", "United_States_Virgin_Islands", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Wallis_and_Futuna",
                                                  "Western_Sahara", "Yemen", "Zambia", "Zimbabwe"};
             string rndCountry = countries[rndNumber];
+            tBCountry.Text = rndCountry;
 
             var result = (from r in Records
                           where r.Countries.Contains(rndCountry) &&
@@ -244,9 +243,8 @@ namespace CovidCounter
             var chartArea = chartCases.ChartAreas[0];
             chartArea.AxisX.IsReversed = true;
             chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = true;
             chartArea.AxisY.MajorGrid.LineColor = Color.LightGray;
-            chartArea.AxisY.IsStartedFromZero = false;
-            chartArea.AxisY.Minimum = 0;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
